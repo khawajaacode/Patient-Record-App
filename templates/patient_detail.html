@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Patient Detail – MediRecord</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#F7F4EF; --surface:#FFFFFF; --border:#E4DDD3;
+    --accent:#1A3A2A; --accent2:#2E6B4F; --accent3:#C8E6C9;
+    --text:#1C1C1C; --muted:#7A7065; --danger:#C0392B;
+    --radius:12px; --shadow:0 2px 16px rgba(26,58,42,0.08);
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+
+  header { background:var(--accent); color:#fff; padding:0 32px; height:64px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100; box-shadow:0 2px 12px rgba(0,0,0,0.18); }
+  .logo { font-family:'DM Serif Display',serif; font-size:1.5rem; }
+  .back-btn { display:flex; align-items:center; gap:8px; color:rgba(255,255,255,0.8); text-decoration:none; font-size:0.88rem; transition:color 0.18s; }
+  .back-btn:hover { color:#fff; }
+
+  .page { max-width:1200px; margin:0 auto; padding:28px 32px 64px; }
+
+  /* ── PATIENT CARD ── */
+  .patient-card { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:28px 32px; box-shadow:var(--shadow); margin-bottom:28px; display:flex; justify-content:space-between; align-items:flex-start; gap:24px; flex-wrap:wrap; }
+  .patient-info h1 { font-family:'DM Serif Display',serif; font-size:2rem; margin-bottom:8px; }
+  .patient-meta { display:flex; gap:12px; flex-wrap:wrap; margin-top:10px; }
+  .meta-chip { display:inline-flex; align-items:center; gap:5px; padding:5px 12px; background:var(--bg); border:1px solid var(--border); border-radius:20px; font-size:0.82rem; color:var(--muted); }
+  .meta-chip strong { color:var(--text); }
+  .patient-actions { display:flex; gap:10px; }
+
+  /* ── SECTION HEADERS ── */
+  .section-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
+  .section-title { font-family:'DM Serif Display',serif; font-size:1.4rem; }
+  .section-block { margin-bottom:32px; }
+
+  /* ── BUTTONS ── */
+  .btn { padding:10px 20px; border-radius:8px; font-family:'DM Sans',sans-serif; font-size:0.88rem; font-weight:500; cursor:pointer; border:none; transition:all 0.18s; display:inline-flex; align-items:center; gap:6px; white-space:nowrap; }
+  .btn-primary { background:var(--accent); color:#fff; }
+  .btn-primary:hover { background:var(--accent2); }
+  .btn-outline { background:transparent; border:1.5px solid var(--border); color:var(--text); }
+  .btn-outline:hover { border-color:var(--accent2); color:var(--accent2); }
+  .btn-danger { background:var(--danger); color:#fff; }
+  .btn-danger:hover { background:#a93226; }
+  .btn-sm { padding:6px 14px; font-size:0.82rem; }
+  .btn-ghost { background:none; border:none; cursor:pointer; padding:5px 8px; border-radius:6px; font-size:0.82rem; color:var(--muted); transition:all 0.15s; }
+  .btn-ghost:hover { background:var(--bg); color:var(--danger); }
+
+  /* ── VISIT CARDS ── */
+  .visit-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:20px 24px; margin-bottom:14px; box-shadow:var(--shadow); position:relative; }
+  .visit-card:hover { border-color:var(--accent3); }
+  .visit-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:14px; }
+  .visit-date { font-family:'DM Serif Display',serif; font-size:1.1rem; color:var(--accent); }
+  .visit-doctor { font-size:0.82rem; color:var(--muted); margin-top:2px; }
+  .visit-actions { display:flex; gap:6px; }
+  .visit-fields { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .visit-field label { font-size:0.74rem; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; margin-bottom:3px; }
+  .visit-field .val { font-size:0.88rem; color:var(--text); line-height:1.5; }
+  .visit-field.full { grid-column:1/-1; }
+  .disease-tag { display:inline-block; padding:3px 10px; background:#FEE2E2; color:#991B1B; border-radius:20px; font-size:0.78rem; font-weight:600; }
+
+  /* ── REPORTS ── */
+  .reports-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:14px; }
+  .report-card { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; text-align:center; cursor:pointer; transition:all 0.18s; position:relative; }
+  .report-card:hover { border-color:var(--accent2); transform:translateY(-2px); box-shadow:0 8px 20px rgba(26,58,42,0.12); }
+  .report-icon { font-size:2.8rem; margin-bottom:8px; display:block; }
+  .report-name { font-size:0.8rem; font-weight:600; word-break:break-word; color:var(--text); }
+  .report-type-badge { display:inline-block; margin-top:6px; padding:2px 8px; background:var(--accent3); color:var(--accent); border-radius:10px; font-size:0.72rem; font-weight:600; }
+  .report-date { font-size:0.72rem; color:var(--muted); margin-top:4px; }
+  .report-delete { position:absolute; top:6px; right:6px; background:none; border:none; cursor:pointer; font-size:0.9rem; opacity:0; transition:opacity 0.15s; }
+  .report-card:hover .report-delete { opacity:1; }
+  .upload-card { border:2px dashed var(--border); background:transparent; cursor:pointer; color:var(--muted); font-size:0.85rem; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:120px; }
+  .upload-card:hover { border-color:var(--accent2); color:var(--accent2); }
+  .empty-state { text-align:center; padding:48px 24px; color:var(--muted); }
+  .empty-state .icon { font-size:2.5rem; margin-bottom:10px; }
+
+  /* ── MODAL ── */
+  .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:999; align-items:center; justify-content:center; padding:24px; }
+  .modal-overlay.active { display:flex; }
+  .modal { background:var(--surface); border-radius:16px; width:100%; max-width:580px; max-height:90vh; overflow-y:auto; box-shadow:0 24px 64px rgba(0,0,0,0.2); animation:slideUp 0.22s ease; }
+  @keyframes slideUp { from{transform:translateY(24px);opacity:0;}to{transform:translateY(0);opacity:1;} }
+  .modal-header { padding:24px 28px 0; display:flex; justify-content:space-between; align-items:center; }
+  .modal-header h2 { font-family:'DM Serif Display',serif; font-size:1.35rem; }
+  .modal-body { padding:20px 28px 28px; }
+  .close-btn { background:none; border:none; font-size:1.3rem; cursor:pointer; color:var(--muted); }
+  .close-btn:hover { color:var(--danger); }
+
+  /* ── FORM ── */
+  .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .form-group { display:flex; flex-direction:column; gap:4px; }
+  .form-group.full { grid-column:1/-1; }
+  label { font-size:0.78rem; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.5px; }
+  input,select,textarea { padding:9px 12px; border:1.5px solid var(--border); border-radius:7px; font-family:'DM Sans',sans-serif; font-size:0.9rem; outline:none; background:var(--bg); color:var(--text); transition:border-color 0.18s; }
+  input:focus,select:focus,textarea:focus { border-color:var(--accent2); background:#fff; }
+  textarea { resize:vertical; min-height:80px; }
+  .form-actions { display:flex; gap:10px; justify-content:flex-end; margin-top:20px; }
+  .error-msg { color:var(--danger); font-size:0.82rem; margin-top:8px; }
+
+  /* ── FILE DROP ZONE ── */
+  #dropZone { border:2px dashed var(--border); border-radius:10px; padding:32px; text-align:center; cursor:pointer; transition:all 0.2s; margin-bottom:14px; }
+  #dropZone.dragover { border-color:var(--accent2); background:#F0F7F3; }
+  #dropZone p { color:var(--muted); font-size:0.9rem; }
+  #fileInput { display:none; }
+
+  /* ── TOAST ── */
+  #toast { position:fixed; bottom:28px; right:28px; background:var(--accent); color:#fff; padding:14px 22px; border-radius:10px; font-size:0.88rem; box-shadow:0 8px 24px rgba(0,0,0,0.18); z-index:9999; display:none; }
+  #toast.error { background:var(--danger); }
+
+  /* ── PREVIEW MODAL ── */
+  #previewModal .modal { max-width:860px; }
+  #previewContent { width:100%; min-height:400px; border:none; }
+  #previewImg { max-width:100%; border-radius:8px; display:none; }
+
+  @media (max-width:768px) {
+    .page { padding:16px 16px 48px; }
+    .visit-fields { grid-template-columns:1fr; }
+    .form-grid { grid-template-columns:1fr; }
+    .reports-grid { grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); }
+    header { padding:0 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="/" class="back-btn">← Back to Patients</a>
+  <div class="logo" style="color:#fff;">🏥 MediRecord</div>
+  <div></div>
+</header>
+
+<div class="page" id="pageContent">
+  <p style="color:var(--muted);padding:32px;text-align:center;">Loading patient…</p>
+</div>
+
+<!-- VISIT MODAL -->
+<div class="modal-overlay" id="visitModal">
+  <div class="modal">
+    <div class="modal-header"><h2 id="visitModalTitle">Add Visit</h2><button class="close-btn" onclick="closeVisitModal()">✕</button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Visit Date *</label>
+          <input type="date" id="v_date">
+        </div>
+        <div class="form-group">
+          <label>Doctor Name</label>
+          <input type="text" id="v_doctor" placeholder="Dr. Name">
+        </div>
+        <div class="form-group full">
+          <label>Disease / Complaint</label>
+          <input type="text" id="v_disease" placeholder="e.g. Hypertension, Diabetes, Fever">
+        </div>
+        <div class="form-group full">
+          <label>Diagnosis</label>
+          <textarea id="v_diagnosis" placeholder="Detailed diagnosis notes…"></textarea>
+        </div>
+        <div class="form-group full">
+          <label>Prescription / Medicines</label>
+          <textarea id="v_prescription" placeholder="List of medicines, dosage…"></textarea>
+        </div>
+        <div class="form-group full">
+          <label>Additional Notes</label>
+          <textarea id="v_notes" placeholder="Lab instructions, follow-up dates, etc."></textarea>
+        </div>
+      </div>
+      <div id="visitError" class="error-msg"></div>
+      <div class="form-actions">
+        <button class="btn btn-outline" onclick="closeVisitModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="saveVisit()">💾 Save Visit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- UPLOAD MODAL -->
+<div class="modal-overlay" id="uploadModal">
+  <div class="modal">
+    <div class="modal-header"><h2>Upload Report / Scan</h2><button class="close-btn" onclick="closeUploadModal()">✕</button></div>
+    <div class="modal-body">
+      <div id="dropZone" onclick="document.getElementById('fileInput').click()" ondragover="event.preventDefault();this.classList.add('dragover')" ondragleave="this.classList.remove('dragover')" ondrop="handleDrop(event)">
+        <div style="font-size:2.5rem;margin-bottom:10px;">📤</div>
+        <p><strong>Click to browse</strong> or drag & drop file here</p>
+        <p style="font-size:0.78rem;margin-top:6px;">PDF, PNG, JPG, JPEG, GIF, TIFF supported · Max 50MB</p>
+      </div>
+      <input type="file" id="fileInput" accept=".pdf,.png,.jpg,.jpeg,.gif,.bmp,.tiff" onchange="handleFileSelect(event)">
+      <div id="filePreviewLabel" style="font-size:0.85rem;color:var(--accent2);margin-bottom:12px;display:none;"></div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Report Type</label>
+          <select id="u_type">
+            <option value="">General</option>
+            <option>X-Ray</option>
+            <option>MRI</option>
+            <option>CT Scan</option>
+            <option>Ultrasound</option>
+            <option>Blood Test</option>
+            <option>Urine Test</option>
+            <option>ECG</option>
+            <option>Prescription</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Link to Visit (optional)</label>
+          <select id="u_history"></select>
+        </div>
+        <div class="form-group full">
+          <label>Description</label>
+          <input type="text" id="u_desc" placeholder="e.g. Chest X-Ray – March 2025">
+        </div>
+      </div>
+      <div id="uploadError" class="error-msg"></div>
+      <div id="uploadProgress" style="display:none;margin-top:10px;color:var(--accent2);font-size:0.88rem;">Uploading…</div>
+      <div class="form-actions">
+        <button class="btn btn-outline" onclick="closeUploadModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="uploadFile()">📤 Upload</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FILE PREVIEW MODAL -->
+<div class="modal-overlay" id="previewModal">
+  <div class="modal" style="max-width:900px;">
+    <div class="modal-header"><h2 id="previewTitle">Report</h2><button class="close-btn" onclick="closePreview()">✕</button></div>
+    <div class="modal-body" style="padding:16px 24px 24px;">
+      <iframe id="previewContent" style="width:100%;min-height:500px;border:none;border-radius:8px;"></iframe>
+      <img id="previewImg" style="max-width:100%;border-radius:8px;display:none;">
+      <div class="form-actions" style="margin-top:14px;">
+        <a id="previewDownload" class="btn btn-primary" download>⬇ Download</a>
+        <button class="btn btn-outline" onclick="closePreview()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE CONFIRM -->
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal" style="max-width:400px;">
+    <div class="modal-header"><h2 id="deleteModalTitle">Confirm Delete</h2><button class="close-btn" onclick="closeDeleteModal()">✕</button></div>
+    <div class="modal-body">
+      <p style="color:var(--muted);margin-bottom:20px;" id="deleteModalMsg">Are you sure?</p>
+      <div class="form-actions">
+        <button class="btn btn-outline" onclick="closeDeleteModal()">Cancel</button>
+        <button class="btn btn-danger" onclick="confirmDelete()">🗑 Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const PATIENT_ID = '{{ patient_id }}';
+let patient = null;
+let editingVisitId = null;
+let selectedFile = null;
+let deletingType = null;
+let deletingId = null;
+let historyList = [];
+
+// ── LOAD PATIENT ──
+async function loadPatient() {
+  try {
+    const [pRes, hRes, rRes] = await Promise.all([
+      fetch('/api/patients/' + PATIENT_ID),
+      fetch('/api/patients/' + PATIENT_ID + '/history'),
+      fetch('/api/patients/' + PATIENT_ID + '/reports')
+    ]);
+    patient = await pRes.json();
+    historyList = await hRes.json();
+    const reports = await rRes.json();
+    render(historyList, reports);
+  } catch(e) {
+    document.getElementById('pageContent').innerHTML = '<p style="color:var(--danger);padding:32px;text-align:center;">Failed to load patient data.</p>';
+  }
+}
+
+function render(history, reports) {
+  const c = document.getElementById('pageContent');
+  c.innerHTML = `
+    <div class="patient-card">
+      <div class="patient-info">
+        <h1>${esc(patient.name)}</h1>
+        <div class="patient-meta">
+          ${patient.age ? `<div class="meta-chip">🎂 Age: <strong>${patient.age}</strong></div>` : ''}
+          ${patient.gender ? `<div class="meta-chip">👤 <strong>${esc(patient.gender)}</strong></div>` : ''}
+          ${patient.blood_group ? `<div class="meta-chip">🩸 <strong>${esc(patient.blood_group)}</strong></div>` : ''}
+          ${patient.phone ? `<div class="meta-chip">📞 <strong>${esc(patient.phone)}</strong></div>` : ''}
+          ${patient.email ? `<div class="meta-chip">✉️ ${esc(patient.email)}</div>` : ''}
+          ${patient.address ? `<div class="meta-chip">📍 ${esc(patient.address)}</div>` : ''}
+          ${patient.emergency_contact ? `<div class="meta-chip">🚨 ${esc(patient.emergency_contact)}</div>` : ''}
+        </div>
+      </div>
+      <div class="patient-actions">
+        <a href="/" class="btn btn-outline btn-sm">← Back</a>
+      </div>
+    </div>
+
+    <!-- VISITS -->
+    <div class="section-block">
+      <div class="section-header">
+        <h2 class="section-title">📋 Medical History <span style="font-size:0.9rem;color:var(--muted);font-family:'DM Sans',sans-serif;">(${history.length} visit${history.length!==1?'s':''})</span></h2>
+        <button class="btn btn-primary btn-sm" onclick="openAddVisit()">＋ Add Visit</button>
+      </div>
+      ${history.length === 0 ? `<div class="empty-state"><div class="icon">📋</div><p>No visits recorded yet. Click "Add Visit" to start.</p></div>` : history.map(h => renderVisitCard(h)).join('')}
+    </div>
+
+    <!-- REPORTS -->
+    <div class="section-block">
+      <div class="section-header">
+        <h2 class="section-title">📁 Reports & Scans <span style="font-size:0.9rem;color:var(--muted);font-family:'DM Sans',sans-serif;">(${reports.length} file${reports.length!==1?'s':''})</span></h2>
+        <button class="btn btn-primary btn-sm" onclick="openUploadModal()">⬆ Upload Report</button>
+      </div>
+      <div class="reports-grid">
+        ${reports.map(r => renderReportCard(r)).join('')}
+        <div class="report-card upload-card" onclick="openUploadModal()">
+          <span style="font-size:2rem;margin-bottom:6px;">＋</span>
+          <span>Upload New</span>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderVisitCard(h) {
+  return `
+    <div class="visit-card">
+      <div class="visit-top">
+        <div>
+          <div class="visit-date">📅 ${esc(h.visit_date)}</div>
+          ${h.doctor_name ? `<div class="visit-doctor">Dr. ${esc(h.doctor_name)}</div>` : ''}
+        </div>
+        <div class="visit-actions">
+          <button class="btn btn-outline btn-sm" onclick="openEditVisit('${h.id}')">✏️ Edit</button>
+          <button class="btn btn-danger btn-sm" onclick="askDeleteVisit('${h.id}')">🗑</button>
+        </div>
+      </div>
+      <div class="visit-fields">
+        <div class="visit-field">
+          <label>Disease / Complaint</label>
+          <div class="val">${h.disease ? `<span class="disease-tag">${esc(h.disease)}</span>` : '<span style="color:var(--muted)">—</span>'}</div>
+        </div>
+        <div class="visit-field">
+          <label>Reports Attached</label>
+          <div class="val">${h.report_count || 0} file${h.report_count !== 1 ? 's':''}</div>
+        </div>
+        <div class="visit-field full">
+          <label>Diagnosis</label>
+          <div class="val">${h.diagnosis ? esc(h.diagnosis) : '<span style="color:var(--muted)">—</span>'}</div>
+        </div>
+        <div class="visit-field full">
+          <label>Prescription</label>
+          <div class="val" style="white-space:pre-wrap;">${h.prescription ? esc(h.prescription) : '<span style="color:var(--muted)">—</span>'}</div>
+        </div>
+        ${h.notes ? `<div class="visit-field full"><label>Notes</label><div class="val" style="white-space:pre-wrap;">${esc(h.notes)}</div></div>` : ''}
+      </div>
+    </div>
+  `;
+}
+
+function renderReportCard(r) {
+  const ext = r.file_type;
+  const isImg = ['png','jpg','jpeg','gif','bmp','tiff'].includes(ext);
+  const icon = ext === 'pdf' ? '📄' : isImg ? '🖼️' : '📎';
+  return `
+    <div class="report-card" onclick="previewReport('${r.id}','${esc(r.filename)}','${esc(r.original_name)}','${ext}')">
+      <button class="report-delete" onclick="event.stopPropagation();askDeleteReport('${r.id}')">✕</button>
+      <span class="report-icon">${icon}</span>
+      <div class="report-name">${esc(r.original_name)}</div>
+      ${r.report_type ? `<div class="report-type-badge">${esc(r.report_type)}</div>` : ''}
+      <div class="report-date">${r.uploaded_at.split(' ')[0]}</div>
+      ${r.description ? `<div style="font-size:0.72rem;color:var(--muted);margin-top:3px;">${esc(r.description)}</div>` : ''}
+    </div>
+  `;
+}
+
+// ── VISIT MODAL ──
+function openAddVisit() {
+  editingVisitId = null;
+  document.getElementById('visitModalTitle').textContent = 'Add Visit';
+  document.getElementById('v_date').value = new Date().toISOString().split('T')[0];
+  ['v_doctor','v_disease','v_diagnosis','v_prescription','v_notes'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('visitError').textContent = '';
+  document.getElementById('visitModal').classList.add('active');
+}
+
+async function openEditVisit(id) {
+  try {
+    const res = await fetch('/api/patients/' + PATIENT_ID + '/history');
+    const list = await res.json();
+    const h = list.find(x => x.id === id);
+    if (!h) return;
+    editingVisitId = id;
+    document.getElementById('visitModalTitle').textContent = 'Edit Visit';
+    document.getElementById('v_date').value = h.visit_date;
+    document.getElementById('v_doctor').value = h.doctor_name || '';
+    document.getElementById('v_disease').value = h.disease || '';
+    document.getElementById('v_diagnosis').value = h.diagnosis || '';
+    document.getElementById('v_prescription').value = h.prescription || '';
+    document.getElementById('v_notes').value = h.notes || '';
+    document.getElementById('visitError').textContent = '';
+    document.getElementById('visitModal').classList.add('active');
+  } catch(e) { showToast('Failed to load visit', true); }
+}
+
+function closeVisitModal() { document.getElementById('visitModal').classList.remove('active'); }
+
+async function saveVisit() {
+  const date = document.getElementById('v_date').value;
+  if (!date) { document.getElementById('visitError').textContent = 'Visit date is required.'; return; }
+  const data = {
+    visit_date: date,
+    doctor_name: document.getElementById('v_doctor').value,
+    disease: document.getElementById('v_disease').value,
+    diagnosis: document.getElementById('v_diagnosis').value,
+    prescription: document.getElementById('v_prescription').value,
+    notes: document.getElementById('v_notes').value
+  };
+  try {
+    const url = editingVisitId ? '/api/history/' + editingVisitId : '/api/patients/' + PATIENT_ID + '/history';
+    const method = editingVisitId ? 'PUT' : 'POST';
+    const res = await fetch(url, { method, headers:{'Content-Type':'application/json'}, body: JSON.stringify(data) });
+    const result = await res.json();
+    if (!res.ok) { document.getElementById('visitError').textContent = result.error || 'Save failed.'; return; }
+    closeVisitModal();
+    loadPatient();
+    showToast(editingVisitId ? 'Visit updated' : 'Visit added');
+  } catch(e) { document.getElementById('visitError').textContent = 'Network error.'; }
+}
+
+// ── UPLOAD MODAL ──
+function openUploadModal() {
+  selectedFile = null;
+  document.getElementById('fileInput').value = '';
+  document.getElementById('filePreviewLabel').style.display = 'none';
+  document.getElementById('u_type').value = '';
+  document.getElementById('u_desc').value = '';
+  document.getElementById('uploadError').textContent = '';
+  document.getElementById('uploadProgress').style.display = 'none';
+  // populate visit selector
+  const sel = document.getElementById('u_history');
+  sel.innerHTML = '<option value="">— Not linked —</option>' + historyList.map(h => `<option value="${h.id}">${h.visit_date}${h.disease?' – '+h.disease:''}</option>`).join('');
+  document.getElementById('uploadModal').classList.add('active');
+}
+
+function closeUploadModal() { document.getElementById('uploadModal').classList.remove('active'); selectedFile = null; }
+
+function handleFileSelect(e) {
+  if (e.target.files.length) setFile(e.target.files[0]);
+}
+function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById('dropZone').classList.remove('dragover');
+  if (e.dataTransfer.files.length) setFile(e.dataTransfer.files[0]);
+}
+function setFile(f) {
+  selectedFile = f;
+  const lbl = document.getElementById('filePreviewLabel');
+  lbl.textContent = '✅ Selected: ' + f.name + ' (' + (f.size/1024).toFixed(1) + ' KB)';
+  lbl.style.display = 'block';
+}
+
+async function uploadFile() {
+  if (!selectedFile) { document.getElementById('uploadError').textContent = 'Please select a file.'; return; }
+  const fd = new FormData();
+  fd.append('file', selectedFile);
+  fd.append('report_type', document.getElementById('u_type').value);
+  fd.append('description', document.getElementById('u_desc').value);
+  const histId = document.getElementById('u_history').value;
+  if (histId) fd.append('history_id', histId);
+  document.getElementById('uploadProgress').style.display = 'block';
+  document.getElementById('uploadError').textContent = '';
+  try {
+    const res = await fetch('/api/patients/' + PATIENT_ID + '/reports', { method:'POST', body:fd });
+    const result = await res.json();
+    if (!res.ok) { document.getElementById('uploadError').textContent = result.error || 'Upload failed.'; document.getElementById('uploadProgress').style.display='none'; return; }
+    closeUploadModal();
+    loadPatient();
+    showToast('Report uploaded successfully');
+  } catch(e) { document.getElementById('uploadError').textContent = 'Upload failed.'; document.getElementById('uploadProgress').style.display='none'; }
+}
+
+// ── PREVIEW ──
+function previewReport(id, filename, originalName, ext) {
+  const url = '/uploads/' + filename;
+  const isImg = ['png','jpg','jpeg','gif','bmp','tiff'].includes(ext.toLowerCase());
+  document.getElementById('previewTitle').textContent = originalName;
+  document.getElementById('previewDownload').href = url;
+  document.getElementById('previewDownload').download = originalName;
+  const iframe = document.getElementById('previewContent');
+  const img = document.getElementById('previewImg');
+  if (isImg) {
+    iframe.style.display = 'none'; img.style.display = 'block'; img.src = url;
+  } else {
+    img.style.display = 'none'; iframe.style.display = 'block'; iframe.src = url;
+  }
+  document.getElementById('previewModal').classList.add('active');
+}
+function closePreview() {
+  document.getElementById('previewModal').classList.remove('active');
+  document.getElementById('previewContent').src = '';
+  document.getElementById('previewImg').src = '';
+}
+
+// ── DELETE ──
+function askDeleteVisit(id) {
+  deletingType = 'visit'; deletingId = id;
+  document.getElementById('deleteModalTitle').textContent = 'Delete Visit Record';
+  document.getElementById('deleteModalMsg').textContent = 'This visit record will be permanently deleted. Linked report files will remain.';
+  document.getElementById('deleteModal').classList.add('active');
+}
+function askDeleteReport(id) {
+  deletingType = 'report'; deletingId = id;
+  document.getElementById('deleteModalTitle').textContent = 'Delete Report File';
+  document.getElementById('deleteModalMsg').textContent = 'This file will be permanently deleted from disk.';
+  document.getElementById('deleteModal').classList.add('active');
+}
+function closeDeleteModal() { document.getElementById('deleteModal').classList.remove('active'); deletingType = null; deletingId = null; }
+
+async function confirmDelete() {
+  if (!deletingId) return;
+  const url = deletingType === 'visit' ? '/api/history/' + deletingId : '/api/reports/' + deletingId;
+  try {
+    const res = await fetch(url, { method:'DELETE' });
+    if (res.ok) { closeDeleteModal(); loadPatient(); showToast('Deleted successfully'); }
+    else { showToast('Delete failed', true); }
+  } catch(e) { showToast('Network error', true); }
+}
+
+// ── TOAST ──
+function showToast(msg, isError=false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = isError ? 'error' : '';
+  t.style.display = 'block';
+  setTimeout(() => t.style.display='none', 2800);
+}
+
+function esc(s) { if(!s)return''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+document.addEventListener('keydown', e => { if(e.key==='Escape'){closeVisitModal();closeUploadModal();closePreview();closeDeleteModal();} });
+
+loadPatient();
+</script>
+</body>
+</html>
