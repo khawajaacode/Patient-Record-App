@@ -1,4 +1,4 @@
-# MediRecord – Doctor Patient Record System
+# Doctor Patient Record System
 
 A local, offline patient record management system built with Python + Flask + SQLite.
 
