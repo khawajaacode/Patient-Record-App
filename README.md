@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Doctor Patient Record System
 
 A local, offline patient record management system built with Python + Flask + SQLite.
@@ -87,4 +86,4 @@ Double-click:  **MediRecord_Mac_Linux.command**
 
 ---
 Requirements: Python 3.8+ must be installed on the computer.
->>>>>>> feature
+
