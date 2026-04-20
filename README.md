@@ -48,36 +48,14 @@ patient_records/
 ```
 
 ## Data Storage
-- All data is stored locally in `patients.db` (SQLite)
-- Uploaded files are stored in the `uploads/` folder
-- No cloud, no internet, fully private
-
-## Notes
-- Max file upload size: 50MB
-- Supported file types: PDF, PNG, JPG, JPEG, GIF, BMP, TIFF
-=======
-# MediRecord — Patient Records System
-
-## HOW TO START THE APP
-
-### Windows
-Double-click:  **MediRecord_Windows.vbs**
-- No black window will appear
-- Your browser opens automatically
-- If you see a "Python not found" message, install Python from https://www.python.org/downloads/ (check "Add to PATH")
-
-### Mac / Linux
-Double-click:  **MediRecord_Mac_Linux.command**
-- On first run on Mac, right-click → Open (required once for security)
-- Browser opens automatically
-
----
-
-## DATA STORAGE
 - All patient data is saved in `patients.db` (SQLite database — stays in this folder)
 - Uploaded files are saved in the `uploads/` folder
 - Both survive restarts, shutdowns, and reboots automatically
 - **Do NOT delete** `patients.db` or the `uploads/` folder
+
+## Notes
+- Max file upload size: 50MB
+- Supported file types: PDF, PNG, JPG, JPEG, GIF, BMP, TIFF
 
 ## BACKUP
 - Set a backup folder in the app's ⚙ Settings
