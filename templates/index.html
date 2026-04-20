@@ -8,6 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
+<<<<<<< HEAD
     --bg:        #F7F4EF;
     --surface:   #FFFFFF;
     --border:    #E4DDD3;
@@ -20,10 +21,24 @@
     --warn:      #E67E22;
     --radius:    12px;
     --shadow:    0 2px 16px rgba(26,58,42,0.08);
+=======
+    --bg:      #F7F4EF;
+    --surface: #FFFFFF;
+    --border:  #E4DDD3;
+    --accent:  #1A3A2A;
+    --accent2: #2E6B4F;
+    --accent3: #C8E6C9;
+    --text:    #1C1C1C;
+    --muted:   #7A7065;
+    --danger:  #C0392B;
+    --radius:  12px;
+    --shadow:  0 2px 16px rgba(26,58,42,0.08);
+>>>>>>> feature
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
+<<<<<<< HEAD
   /* ── HEADER ── */
   header {
     background: var(--accent);
@@ -107,6 +122,49 @@
     gap: 6px;
     white-space: nowrap;
   }
+=======
+  header {
+    background: var(--accent); color: #fff;
+    padding: 0 32px; height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+  }
+  .logo { font-family: 'DM Serif Display', serif; font-size: 1.5rem; display: flex; align-items: center; gap: 10px; }
+  .logo span { background: var(--accent3); color: var(--accent); border-radius: 6px; padding: 2px 8px; font-size: 0.75rem; font-family: 'DM Sans', sans-serif; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+  .header-right { display: flex; align-items: center; gap: 10px; }
+
+  /* Single small settings cog icon in header */
+  .icon-btn {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: #fff; border-radius: 8px;
+    width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 1rem; transition: background 0.18s;
+  }
+  .icon-btn:hover { background: rgba(255,255,255,0.22); }
+
+  .stats-bar { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; padding: 24px 32px; max-width: 1400px; margin: 0 auto; }
+  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 24px; box-shadow: var(--shadow); }
+  .stat-card .label { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; margin-bottom: 6px; }
+  .stat-card .value { font-family: 'DM Serif Display', serif; font-size: 2.2rem; color: var(--accent); line-height: 1; }
+  .stat-card .sub   { font-size: 0.78rem; color: var(--muted); margin-top: 4px; }
+
+  .main { max-width: 1400px; margin: 0 auto; padding: 0 32px 48px; }
+
+  .tabs { display: flex; margin-bottom: 20px; border: 1.5px solid var(--border); border-radius: 8px; overflow: hidden; background: var(--surface); width: fit-content; }
+  .tab { padding: 9px 22px; cursor: pointer; font-size: 0.88rem; font-weight: 500; border: none; background: none; font-family: 'DM Sans', sans-serif; color: var(--muted); transition: all 0.18s; }
+  .tab.active { background: var(--accent); color: #fff; }
+
+  .toolbar { display: flex; gap: 12px; margin-bottom: 20px; align-items: center; }
+  .search-box { flex: 1; min-width: 260px; position: relative; }
+  .search-box input { width: 100%; padding: 10px 16px 10px 42px; border: 1.5px solid var(--border); border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; background: var(--surface); outline: none; transition: border-color 0.2s; }
+  .search-box input:focus { border-color: var(--accent2); }
+  .search-icon { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
+
+  .btn { padding: 10px 20px; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 500; cursor: pointer; border: none; transition: all 0.18s; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+>>>>>>> feature
   .btn-primary { background: var(--accent); color: #fff; }
   .btn-primary:hover { background: var(--accent2); }
   .btn-outline { background: transparent; border: 1.5px solid var(--border); color: var(--text); }
@@ -115,7 +173,10 @@
   .btn-danger:hover { background: #a93226; }
   .btn-sm { padding: 6px 14px; font-size: 0.82rem; }
 
+<<<<<<< HEAD
   /* ── PATIENT TABLE ── */
+=======
+>>>>>>> feature
   .table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
   table { width: 100%; border-collapse: collapse; }
   thead { background: var(--accent); color: #fff; }
@@ -127,16 +188,24 @@
   .patient-name { font-weight: 600; color: var(--accent); cursor: pointer; }
   .patient-name:hover { text-decoration: underline; }
   .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.74rem; font-weight: 600; }
+<<<<<<< HEAD
   .badge-male { background: #DBEAFE; color: #1E40AF; }
   .badge-female { background: #FCE7F3; color: #9D174D; }
   .badge-other { background: #F3E8FF; color: #6B21A8; }
   .badge-blood { background: #FEE2E2; color: #991B1B; }
+=======
+  .badge-male   { background: #DBEAFE; color: #1E40AF; }
+  .badge-female { background: #FCE7F3; color: #9D174D; }
+  .badge-other  { background: #F3E8FF; color: #6B21A8; }
+  .badge-blood  { background: #FEE2E2; color: #991B1B; }
+>>>>>>> feature
   .badge-visits { background: var(--accent3); color: var(--accent); }
   .actions-cell { display: flex; gap: 6px; }
   .empty-state { text-align: center; padding: 64px 24px; color: var(--muted); }
   .empty-state .icon { font-size: 3rem; margin-bottom: 12px; }
   .empty-state h3 { font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: var(--text); margin-bottom: 6px; }
 
+<<<<<<< HEAD
   /* ── MODAL ── */
   .modal-overlay {
     display: none;
@@ -166,10 +235,23 @@
   .close-btn:hover { color: var(--danger); }
 
   /* ── FORM ── */
+=======
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 999; align-items: center; justify-content: center; padding: 24px; }
+  .modal-overlay.active { display: flex; }
+  .modal { background: var(--surface); border-radius: 16px; width: 100%; max-width: 560px; max-height: 90vh; overflow-y: auto; box-shadow: 0 24px 64px rgba(0,0,0,0.2); animation: slideUp 0.22s ease; }
+  @keyframes slideUp { from { transform: translateY(24px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .modal-header { padding: 24px 28px 0; display: flex; justify-content: space-between; align-items: center; }
+  .modal-header h2 { font-family: 'DM Serif Display', serif; font-size: 1.4rem; }
+  .modal-body { padding: 20px 28px 28px; }
+  .close-btn { background: none; border: none; font-size: 1.3rem; cursor: pointer; color: var(--muted); }
+  .close-btn:hover { color: var(--danger); }
+
+>>>>>>> feature
   .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .form-group { display: flex; flex-direction: column; gap: 5px; }
   .form-group.full { grid-column: 1 / -1; }
   label { font-size: 0.8rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+<<<<<<< HEAD
   input, select, textarea {
     padding: 9px 13px;
     border: 1.5px solid var(--border);
@@ -217,21 +299,50 @@
     header { padding: 0 16px; }
     .main { padding: 0 16px 48px; }
     .stats-bar { padding: 16px; }
+=======
+  input, select, textarea { padding: 9px 13px; border: 1.5px solid var(--border); border-radius: 7px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; outline: none; background: var(--bg); color: var(--text); transition: border-color 0.18s; }
+  input:focus, select:focus, textarea:focus { border-color: var(--accent2); background: #fff; }
+  .form-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+  .error-msg { color: var(--danger); font-size: 0.82rem; margin-top: 8px; }
+  .info-msg  { font-size: 0.83rem; color: var(--muted); line-height: 1.6; }
+
+  .research-result { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+  .research-result table thead { background: var(--accent2); }
+
+  #toast { position: fixed; bottom: 28px; right: 28px; background: var(--accent); color: #fff; padding: 14px 22px; border-radius: 10px; font-size: 0.88rem; box-shadow: 0 8px 24px rgba(0,0,0,0.18); z-index: 9999; display: none; }
+  #toast.error { background: var(--danger); }
+
+  @media (max-width: 768px) {
+    .stats-bar { grid-template-columns: 1fr 1fr; padding: 16px; }
+    .form-grid { grid-template-columns: 1fr; }
+    header { padding: 0 16px; }
+    .main { padding: 0 16px 48px; }
+>>>>>>> feature
   }
 </style>
 </head>
 <body>
 
 <header>
+<<<<<<< HEAD
   <div class="logo">
     🏥 MediRecord <span>v1.0</span>
   </div>
   <div class="header-actions">
+=======
+  <div class="logo">🏥 MediRecord <span>v1.0</span></div>
+  <div class="header-right">
+    <button class="icon-btn" onclick="openSettings()" title="Backup Settings">⚙</button>
+>>>>>>> feature
     <button class="btn btn-primary" onclick="openAddModal()">＋ New Patient</button>
   </div>
 </header>
 
+<<<<<<< HEAD
 <div class="stats-bar" id="statsBar">
+=======
+<div class="stats-bar">
+>>>>>>> feature
   <div class="stat-card"><div class="label">Total Patients</div><div class="value" id="statPatients">—</div><div class="sub">registered</div></div>
   <div class="stat-card"><div class="label">Total Visits</div><div class="value" id="statVisits">—</div><div class="sub">all time</div></div>
   <div class="stat-card"><div class="label">Reports Uploaded</div><div class="value" id="statReports">—</div><div class="sub">files on disk</div></div>
@@ -244,7 +355,10 @@
     <button class="tab" onclick="switchTab('research')">🔬 Disease Search</button>
   </div>
 
+<<<<<<< HEAD
   <!-- PATIENTS TAB -->
+=======
+>>>>>>> feature
   <div id="tabPatients">
     <div class="toolbar">
       <div class="search-box">
@@ -253,6 +367,7 @@
       </div>
     </div>
     <div class="table-wrap">
+<<<<<<< HEAD
       <table id="patientTable">
         <thead>
           <tr>
@@ -268,12 +383,21 @@
         </thead>
         <tbody id="patientBody">
           <tr><td colspan="8"><div class="empty-state"><div class="icon">⏳</div><p>Loading…</p></div></td></tr>
+=======
+      <table>
+        <thead><tr><th>#</th><th>Patient ID</th><th>Name</th><th>Age</th><th>Gender</th><th>Blood</th><th>Phone</th><th>Visits</th><th>Actions</th></tr></thead>
+        <tbody id="patientBody">
+          <tr><td colspan="9"><div class="empty-state"><div class="icon">⏳</div><p>Loading…</p></div></td></tr>
+>>>>>>> feature
         </tbody>
       </table>
     </div>
   </div>
 
+<<<<<<< HEAD
   <!-- DISEASE RESEARCH TAB -->
+=======
+>>>>>>> feature
   <div id="tabResearch" style="display:none;">
     <div class="toolbar">
       <div class="search-box">
@@ -285,6 +409,7 @@
   </div>
 </div>
 
+<<<<<<< HEAD
 <!-- ADD / EDIT PATIENT MODAL -->
 <div class="modal-overlay" id="patientModal">
   <div class="modal">
@@ -337,6 +462,26 @@
           <label>Emergency Contact</label>
           <input type="text" id="f_emergency" placeholder="Name & phone of next of kin">
         </div>
+=======
+<!-- ADD / EDIT PATIENT -->
+<div class="modal-overlay" id="patientModal">
+  <div class="modal">
+    <div class="modal-header"><h2 id="modalTitle">New Patient</h2><button class="close-btn" onclick="closeModal()">✕</button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group full"><label>Full Name *</label><input type="text" id="f_name" placeholder="e.g. Muhammad Ali Khan"></div>
+        <div class="form-group"><label>Age</label><input type="number" id="f_age" placeholder="35" min="0" max="150"></div>
+        <div class="form-group"><label>Gender</label>
+          <select id="f_gender"><option value="">Select</option><option>Male</option><option>Female</option><option>Other</option></select>
+        </div>
+        <div class="form-group"><label>Blood Group</label>
+          <select id="f_blood"><option value="">Unknown</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select>
+        </div>
+        <div class="form-group"><label>Phone</label><input type="text" id="f_phone" placeholder="0300-1234567"></div>
+        <div class="form-group"><label>Email</label><input type="email" id="f_email" placeholder="optional"></div>
+        <div class="form-group full"><label>Address</label><input type="text" id="f_address" placeholder="Home address"></div>
+        <div class="form-group full"><label>Emergency Contact</label><input type="text" id="f_emergency" placeholder="Name & phone of next of kin"></div>
+>>>>>>> feature
       </div>
       <div id="formError" class="error-msg"></div>
       <div class="form-actions">
@@ -347,12 +492,48 @@
   </div>
 </div>
 
+<<<<<<< HEAD
 <!-- DELETE CONFIRM MODAL -->
+=======
+<!-- SETTINGS (backup folder setup only) -->
+<div class="modal-overlay" id="settingsModal">
+  <div class="modal" style="max-width:480px;">
+    <div class="modal-header"><h2>⚙ Backup Settings</h2><button class="close-btn" onclick="closeSettings()">✕</button></div>
+    <div class="modal-body">
+      <p class="info-msg">
+        Choose a folder where the backup ZIP will be saved automatically.<br>
+        Backup includes <b>all patient data (Excel) + all uploaded files</b>, organized by Patient ID.<br>
+        Updates on every change and on every app start.<br><br>
+        <b>Recommended:</b> A USB drive, OneDrive, or Google Drive folder.
+      </p>
+      <br>
+      <div class="form-group full">
+        <label>Backup Folder Path</label>
+        <input type="text" id="s_folder" placeholder="e.g. C:\Users\Doctor\OneDrive\MediBackup">
+        <small style="color:var(--muted);font-size:0.78rem;margin-top:5px;display:block;">
+          Paste the full folder path. It will be created automatically if it does not exist.
+        </small>
+      </div>
+      <div id="settingsMsg" style="font-size:0.83rem;margin-top:10px;min-height:20px;"></div>
+      <div class="form-actions">
+        <button class="btn btn-outline" onclick="closeSettings()">Cancel</button>
+        <button class="btn btn-primary" onclick="saveSettingsNow()">💾 Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE CONFIRM -->
+>>>>>>> feature
 <div class="modal-overlay" id="deleteModal">
   <div class="modal" style="max-width:400px;">
     <div class="modal-header"><h2>Delete Patient</h2><button class="close-btn" onclick="closeDeleteModal()">✕</button></div>
     <div class="modal-body">
+<<<<<<< HEAD
       <p style="color:var(--muted);margin-bottom:20px;">This will permanently delete the patient and all their medical records and uploaded files. This cannot be undone.</p>
+=======
+      <p style="color:var(--muted);margin-bottom:20px;">This will permanently delete the patient and all their records and uploaded files. This cannot be undone.</p>
+>>>>>>> feature
       <div class="form-actions">
         <button class="btn btn-outline" onclick="closeDeleteModal()">Cancel</button>
         <button class="btn btn-danger" onclick="confirmDelete()">🗑 Delete Permanently</button>
@@ -364,6 +545,7 @@
 <div id="toast"></div>
 
 <script>
+<<<<<<< HEAD
 let editingId = null;
 let deletingId = null;
 let searchTimer = null;
@@ -396,12 +578,39 @@ async function loadPatients(search = '') {
     tbody.innerHTML = patients.map((p, i) => `
       <tr>
         <td style="color:var(--muted);font-size:0.8rem;">${i+1}</td>
+=======
+let editingId = null, deletingId = null, searchTimer, diseaseTimer;
+
+async function loadStats() {
+  try {
+    const d = await fetch('/api/stats').then(r => r.json());
+    document.getElementById('statPatients').textContent = d.total_patients;
+    document.getElementById('statVisits').textContent   = d.total_visits;
+    document.getElementById('statReports').textContent  = d.total_reports;
+    document.getElementById('statNew').textContent      = d.recent_patients;
+  } catch(e) {}
+}
+
+async function loadPatients(search = '') {
+  const tbody = document.getElementById('patientBody');
+  try {
+    const patients = await fetch('/api/patients?search=' + encodeURIComponent(search)).then(r => r.json());
+    if (!patients.length) {
+      tbody.innerHTML = `<tr><td colspan="9"><div class="empty-state"><div class="icon">👤</div><h3>No patients found</h3><p>${search ? 'Try a different search term.' : 'Add your first patient using the button above.'}</p></div></td></tr>`;
+      return;
+    }
+    tbody.innerHTML = patients.map((p, i) => `
+      <tr>
+        <td style="color:var(--muted);font-size:0.8rem;">${i+1}</td>
+        <td><span style="font-family:monospace;font-size:0.82rem;background:var(--accent3);color:var(--accent);padding:2px 8px;border-radius:5px;font-weight:600;">${esc(p.patient_id)}</span></td>
+>>>>>>> feature
         <td><span class="patient-name" onclick="viewPatient('${p.id}')">${esc(p.name)}</span></td>
         <td>${p.age || '—'}</td>
         <td>${p.gender ? `<span class="badge badge-${p.gender.toLowerCase()}">${esc(p.gender)}</span>` : '—'}</td>
         <td>${p.blood_group ? `<span class="badge badge-blood">${esc(p.blood_group)}</span>` : '—'}</td>
         <td>${esc(p.phone) || '—'}</td>
         <td><span class="badge badge-visits">${p.visit_count} visit${p.visit_count !== 1 ? 's' : ''}</span></td>
+<<<<<<< HEAD
         <td>
           <div class="actions-cell">
             <button class="btn btn-outline btn-sm" onclick="viewPatient('${p.id}')">📋 View</button>
@@ -454,12 +663,56 @@ async function openEditModal(id) {
   } catch(e) { showToast('Failed to load patient data', true); }
 }
 
+=======
+        <td><div class="actions-cell">
+          <button class="btn btn-outline btn-sm" onclick="viewPatient('${p.id}')">📋 View</button>
+          <button class="btn btn-outline btn-sm" onclick="openEditModal('${p.id}')">✏️</button>
+          <button class="btn btn-danger  btn-sm" onclick="openDeleteModal('${p.id}')">🗑</button>
+        </div></td>
+      </tr>`).join('');
+  } catch(e) {
+    tbody.innerHTML = `<tr><td colspan="9"><div class="empty-state"><div class="icon">⚠️</div><p>Failed to load patients.</p></div></td></tr>`;
+  }
+}
+
+function debounceSearch()  { clearTimeout(searchTimer);  searchTimer  = setTimeout(() => loadPatients(document.getElementById('searchInput').value), 320); }
+function debounceDisease() { clearTimeout(diseaseTimer); diseaseTimer = setTimeout(() => searchDisease(document.getElementById('diseaseInput').value), 400); }
+function viewPatient(id)   { window.location.href = '/patient/' + id; }
+
+function openAddModal() {
+  editingId = null;
+  document.getElementById('modalTitle').textContent = 'New Patient';
+  ['f_name','f_age','f_gender','f_blood','f_phone','f_email','f_address','f_emergency'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('formError').textContent = '';
+  document.getElementById('patientModal').classList.add('active');
+}
+async function openEditModal(id) {
+  try {
+    const p = await fetch('/api/patients/' + id).then(r => r.json());
+    editingId = id;
+    document.getElementById('modalTitle').textContent    = 'Edit Patient';
+    document.getElementById('f_name').value             = p.name || '';
+    document.getElementById('f_age').value              = p.age  || '';
+    document.getElementById('f_gender').value           = p.gender || '';
+    document.getElementById('f_blood').value            = p.blood_group || '';
+    document.getElementById('f_phone').value            = p.phone || '';
+    document.getElementById('f_email').value            = p.email || '';
+    document.getElementById('f_address').value          = p.address || '';
+    document.getElementById('f_emergency').value        = p.emergency_contact || '';
+    document.getElementById('formError').textContent    = '';
+    document.getElementById('patientModal').classList.add('active');
+  } catch(e) { showToast('Failed to load patient', true); }
+}
+>>>>>>> feature
 function closeModal() { document.getElementById('patientModal').classList.remove('active'); }
 
 async function savePatient() {
   const name = document.getElementById('f_name').value.trim();
   if (!name) { document.getElementById('formError').textContent = 'Patient name is required.'; return; }
+<<<<<<< HEAD
 
+=======
+>>>>>>> feature
   const data = {
     name, age: document.getElementById('f_age').value || null,
     gender: document.getElementById('f_gender').value,
@@ -469,6 +722,7 @@ async function savePatient() {
     address: document.getElementById('f_address').value,
     emergency_contact: document.getElementById('f_emergency').value
   };
+<<<<<<< HEAD
 
   try {
     const url = editingId ? '/api/patients/' + editingId : '/api/patients';
@@ -506,11 +760,36 @@ function debounceDisease() {
   diseaseTimer = setTimeout(() => searchDisease(document.getElementById('diseaseInput').value), 400);
 }
 
+=======
+  try {
+    const res = await fetch(editingId ? '/api/patients/'+editingId : '/api/patients', {
+      method: editingId ? 'PUT' : 'POST',
+      headers: {'Content-Type':'application/json'}, body: JSON.stringify(data)
+    });
+    const result = await res.json();
+    if (!res.ok) { document.getElementById('formError').textContent = result.error || 'Save failed.'; return; }
+    closeModal(); loadPatients(document.getElementById('searchInput').value); loadStats();
+    showToast(editingId ? 'Patient updated' : 'Patient added');
+  } catch(e) { document.getElementById('formError').textContent = 'Network error.'; }
+}
+
+function openDeleteModal(id) { deletingId = id; document.getElementById('deleteModal').classList.add('active'); }
+function closeDeleteModal()   { document.getElementById('deleteModal').classList.remove('active'); deletingId = null; }
+async function confirmDelete() {
+  try {
+    const res = await fetch('/api/patients/' + deletingId, { method: 'DELETE' });
+    if (res.ok) { closeDeleteModal(); loadPatients(); loadStats(); showToast('Patient deleted'); }
+    else showToast('Delete failed', true);
+  } catch(e) { showToast('Network error', true); }
+}
+
+>>>>>>> feature
 async function searchDisease(keyword) {
   const el = document.getElementById('researchResults');
   if (!keyword.trim()) { el.innerHTML = ''; return; }
   el.innerHTML = '<p style="color:var(--muted);padding:16px;">Searching…</p>';
   try {
+<<<<<<< HEAD
     const res = await fetch('/api/search?keyword=' + encodeURIComponent(keyword));
     const rows = await res.json();
     if (!rows.length) {
@@ -566,6 +845,62 @@ function esc(s) { if (!s) return ''; return String(s).replace(/&/g,'&amp;').repl
 document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeDeleteModal(); } });
 
 // ── INIT ──
+=======
+    const rows = await fetch('/api/search?keyword=' + encodeURIComponent(keyword)).then(r => r.json());
+    if (!rows.length) { el.innerHTML = `<div class="empty-state"><div class="icon">🔬</div><h3>No results</h3><p>No records match "<strong>${esc(keyword)}</strong>"</p></div>`; return; }
+    el.innerHTML = `<div class="research-result"><table>
+      <thead><tr><th>Patient</th><th>Age</th><th>Gender</th><th>Blood</th><th>Disease</th><th>Diagnosis</th><th>Visit Date</th><th>Doctor</th><th></th></tr></thead>
+      <tbody>${rows.map(r=>`<tr>
+        <td><strong>${esc(r.name)}</strong></td><td>${r.age||'—'}</td><td>${r.gender||'—'}</td>
+        <td>${r.blood_group?`<span class="badge badge-blood">${esc(r.blood_group)}</span>`:'—'}</td>
+        <td style="color:var(--danger);font-weight:500;">${esc(r.disease)||'—'}</td>
+        <td>${esc(r.diagnosis)||'—'}</td><td>${esc(r.visit_date)||'—'}</td><td>${esc(r.doctor_name)||'—'}</td>
+        <td><button class="btn btn-outline btn-sm" onclick="viewPatient('${r.id}')">View</button></td>
+      </tr>`).join('')}</tbody></table></div>
+      <p style="margin-top:10px;font-size:0.8rem;color:var(--muted);">${rows.length} result${rows.length!==1?'s':''} for "<strong>${esc(keyword)}</strong>"</p>`;
+  } catch(e) { el.innerHTML = '<p style="color:var(--danger);padding:16px;">Search failed.</p>'; }
+}
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', (i===0&&tab==='patients')||(i===1&&tab==='research')));
+  document.getElementById('tabPatients').style.display = tab==='patients' ? '' : 'none';
+  document.getElementById('tabResearch').style.display = tab==='research' ? '' : 'none';
+}
+
+async function openSettings() {
+  try {
+    const s = await fetch('/api/settings').then(r => r.json());
+    document.getElementById('s_folder').value          = s.backup_folder || '';
+    document.getElementById('settingsMsg').textContent = '';
+    document.getElementById('settingsModal').classList.add('active');
+  } catch(e) { showToast('Could not load settings', true); }
+}
+function closeSettings() { document.getElementById('settingsModal').classList.remove('active'); }
+
+async function saveSettingsNow() {
+  const folder = document.getElementById('s_folder').value.trim();
+  if (!folder) { document.getElementById('settingsMsg').innerHTML = '<span style="color:var(--danger)">Please enter a folder path.</span>'; return; }
+  document.getElementById('settingsMsg').innerHTML = '<span style="color:var(--accent2)">Saving…</span>';
+  try {
+    const res  = await fetch('/api/settings', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({backup_folder: folder}) });
+    const data = await res.json();
+    if (!res.ok) { document.getElementById('settingsMsg').innerHTML = `<span style="color:var(--danger)">${data.error}</span>`; return; }
+    document.getElementById('settingsMsg').innerHTML = '<span style="color:var(--accent2)">✅ Saved! Backup running in background…</span>';
+    setTimeout(closeSettings, 1600);
+    showToast('Backup folder saved');
+  } catch(e) { document.getElementById('settingsMsg').innerHTML = '<span style="color:var(--danger)">Save failed.</span>'; }
+}
+
+function showToast(msg, isError = false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = isError ? 'error' : '';
+  t.style.display = 'block';
+  setTimeout(() => t.style.display = 'none', 2800);
+}
+function esc(s) { if(!s)return''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+document.addEventListener('keydown', e => { if(e.key==='Escape'){closeModal();closeSettings();closeDeleteModal();} });
+
+>>>>>>> feature
 loadStats();
 loadPatients();
 </script>

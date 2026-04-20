@@ -283,7 +283,14 @@ function render(history, reports) {
   c.innerHTML = `
     <div class="patient-card">
       <div class="patient-info">
+<<<<<<< HEAD
         <h1>${esc(patient.name)}</h1>
+=======
+        <div style="margin-bottom:8px;">
+            <span style="font-family:monospace;font-size:0.9rem;background:var(--accent3);color:var(--accent);padding:4px 12px;border-radius:6px;font-weight:700;letter-spacing:0.5px;">${esc(patient.patient_id)}</span>
+          </div>
+          <h1>${esc(patient.name)}</h1>
+>>>>>>> feature
         <div class="patient-meta">
           ${patient.age ? `<div class="meta-chip">🎂 Age: <strong>${patient.age}</strong></div>` : ''}
           ${patient.gender ? `<div class="meta-chip">👤 <strong>${esc(patient.gender)}</strong></div>` : ''}
@@ -366,7 +373,11 @@ function renderReportCard(r) {
   const isImg = ['png','jpg','jpeg','gif','bmp','tiff'].includes(ext);
   const icon = ext === 'pdf' ? '📄' : isImg ? '🖼️' : '📎';
   return `
+<<<<<<< HEAD
     <div class="report-card" onclick="previewReport('${r.id}','${esc(r.filename)}','${esc(r.original_name)}','${ext}')">
+=======
+    <div class="report-card" onclick="previewReport('${r.id}','${esc(patient.patient_id)}','${esc(r.filename)}','${esc(r.original_name)}','${ext}')">
+>>>>>>> feature
       <button class="report-delete" onclick="event.stopPropagation();askDeleteReport('${r.id}')">✕</button>
       <span class="report-icon">${icon}</span>
       <div class="report-name">${esc(r.original_name)}</div>
@@ -484,8 +495,13 @@ async function uploadFile() {
 }
 
 // ── PREVIEW ──
+<<<<<<< HEAD
 function previewReport(id, filename, originalName, ext) {
   const url = '/uploads/' + filename;
+=======
+function previewReport(id, patientCode, filename, originalName, ext) {
+  const url = '/uploads/' + patientCode + '/' + filename;
+>>>>>>> feature
   const isImg = ['png','jpg','jpeg','gif','bmp','tiff'].includes(ext.toLowerCase());
   document.getElementById('previewTitle').textContent = originalName;
   document.getElementById('previewDownload').href = url;

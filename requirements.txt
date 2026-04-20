@@ -1,2 +1,6 @@
 flask>=2.3.0
 werkzeug>=2.3.0
+<<<<<<< HEAD
+=======
+openpyxl>=3.1.0
+>>>>>>> feature
