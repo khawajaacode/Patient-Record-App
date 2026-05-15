@@ -1,5 +1,4 @@
 #!/bin/bash
-<<<<<<< HEAD
 echo "========================================"
 echo "  MediRecord - Patient Record System"
 echo "========================================"
@@ -20,8 +19,6 @@ echo "Starting server..."
 echo "Open your browser at: http://127.0.0.1:5000"
 echo "Press CTRL+C to stop."
 echo ""
-=======
 echo "MediRecord - Starting..."
 pip3 install -r requirements.txt --quiet
->>>>>>> feature
 python3 app.py

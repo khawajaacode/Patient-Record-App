@@ -1,5 +1,4 @@
 @echo off
-<<<<<<< HEAD
 echo ========================================
 echo   MediRecord - Patient Record System
 echo ========================================
@@ -25,9 +24,7 @@ echo Press CTRL+C to stop.
 echo.
 python app.py
 pause
-=======
 title MediRecord
 cd /d "%~dp0"
 pip install -r requirements.txt --quiet --disable-pip-version-check >nul 2>&1
 python app.py
->>>>>>> feature
