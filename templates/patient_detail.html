@@ -252,8 +252,9 @@
 
 <div id="toast"></div>
 
+<script src="/static/js/utils.js"></script>
 <script>
-const PATIENT_ID = '{{ patient_id }}';
+const PATIENT_ID = {{ patient_id | tojson }};
 let patient = null;
 let editingVisitId = null;
 let selectedFile = null;
@@ -391,22 +392,19 @@ function openAddVisit() {
 }
 
 async function openEditVisit(id) {
-  try {
-    const res = await fetch('/api/patients/' + PATIENT_ID + '/history');
-    const list = await res.json();
-    const h = list.find(x => x.id === id);
-    if (!h) return;
-    editingVisitId = id;
-    document.getElementById('visitModalTitle').textContent = 'Edit Visit';
-    document.getElementById('v_date').value = h.visit_date;
-    document.getElementById('v_doctor').value = h.doctor_name || '';
-    document.getElementById('v_disease').value = h.disease || '';
-    document.getElementById('v_diagnosis').value = h.diagnosis || '';
-    document.getElementById('v_prescription').value = h.prescription || '';
-    document.getElementById('v_notes').value = h.notes || '';
-    document.getElementById('visitError').textContent = '';
-    document.getElementById('visitModal').classList.add('active');
-  } catch(e) { showToast('Failed to load visit', true); }
+  const h = historyList.find(x => x.id === id);  // no fetch needed
+  if (!h) { showToast('Visit not found', true); return; }
+
+  editingVisitId = id;
+  document.getElementById('visitModalTitle').textContent = 'Edit Visit';
+  document.getElementById('v_date').value         = h.visit_date;
+  document.getElementById('v_doctor').value       = h.doctor_name || '';
+  document.getElementById('v_disease').value      = h.disease || '';
+  document.getElementById('v_diagnosis').value    = h.diagnosis || '';
+  document.getElementById('v_prescription').value = h.prescription || '';
+  document.getElementById('v_notes').value        = h.notes || '';
+  document.getElementById('visitError').textContent = '';
+  document.getElementById('visitModal').classList.add('active');
 }
 
 function closeVisitModal() { document.getElementById('visitModal').classList.remove('active'); }
@@ -414,6 +412,11 @@ function closeVisitModal() { document.getElementById('visitModal').classList.rem
 async function saveVisit() {
   const date = document.getElementById('v_date').value;
   if (!date) { document.getElementById('visitError').textContent = 'Visit date is required.'; return; }
+
+  const btn = document.querySelector('#visitModal .btn-primary');
+  btn.disabled = true;
+  btn.textContent = 'Saving…';
+
   const data = {
     visit_date: date,
     doctor_name: document.getElementById('v_doctor').value,
@@ -424,14 +427,20 @@ async function saveVisit() {
   };
   try {
     const url = editingVisitId ? '/api/history/' + editingVisitId : '/api/patients/' + PATIENT_ID + '/history';
-    const method = editingVisitId ? 'PUT' : 'POST';
-    const res = await fetch(url, { method, headers:{'Content-Type':'application/json'}, body: JSON.stringify(data) });
+    const res = await fetch(url, { method: editingVisitId ? 'PUT' : 'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data) });
     const result = await res.json();
-    if (!res.ok) { document.getElementById('visitError').textContent = result.error || 'Save failed.'; return; }
-    closeVisitModal();
-    loadPatient();
+    if (!res.ok) {
+      document.getElementById('visitError').textContent = result.error || 'Save failed.';
+      return;
+    }
+    closeVisitModal(); loadPatient();
     showToast(editingVisitId ? 'Visit updated' : 'Visit added');
-  } catch(e) { document.getElementById('visitError').textContent = 'Network error.'; }
+  } catch(e) {
+    document.getElementById('visitError').textContent = 'Network error.';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '💾 Save Visit';
+  }
 }
 
 // ── UPLOAD MODAL ──
@@ -459,10 +468,22 @@ function handleDrop(e) {
   document.getElementById('dropZone').classList.remove('dragover');
   if (e.dataTransfer.files.length) setFile(e.dataTransfer.files[0]);
 }
+const ALLOWED_TYPES = ['application/pdf','image/png','image/jpeg','image/gif','image/bmp','image/tiff'];
+const MAX_SIZE_MB = 50;
+
 function setFile(f) {
+  if (!ALLOWED_TYPES.includes(f.type)) {
+    document.getElementById('uploadError').textContent = 'File type not allowed. Use PDF, PNG, JPG, GIF, BMP, or TIFF.';
+    return;
+  }
+  if (f.size > MAX_SIZE_MB * 1024 * 1024) {
+    document.getElementById('uploadError').textContent = `File too large. Maximum size is ${MAX_SIZE_MB}MB.`;
+    return;
+  }
+  document.getElementById('uploadError').textContent = '';
   selectedFile = f;
   const lbl = document.getElementById('filePreviewLabel');
-  lbl.textContent = '✅ Selected: ' + f.name + ' (' + (f.size/1024).toFixed(1) + ' KB)';
+  lbl.textContent = '✅ Selected: ' + f.name + ' (' + (f.size / 1024).toFixed(1) + ' KB)';
   lbl.style.display = 'block';
 }
 
@@ -488,6 +509,12 @@ async function uploadFile() {
 
 // ── PREVIEW ──
 function previewReport(id, patientCode, filename, originalName, ext) {
+  // Guard against path traversal
+  if (filename.includes('..') || filename.includes('/') || filename.includes('\\')) {
+    showToast('Invalid file path', true);
+    return;
+  }
+
   const url = '/uploads/' + patientCode + '/' + filename;
   const isImg = ['png','jpg','jpeg','gif','bmp','tiff'].includes(ext.toLowerCase());
   document.getElementById('previewTitle').textContent = originalName;
@@ -504,7 +531,7 @@ function previewReport(id, patientCode, filename, originalName, ext) {
 }
 function closePreview() {
   document.getElementById('previewModal').classList.remove('active');
-  document.getElementById('previewContent').src = '';
+  document.getElementById('previewContent').src = 'about:blank';
   document.getElementById('previewImg').src = '';
 }
 
@@ -542,7 +569,7 @@ function showToast(msg, isError=false) {
   setTimeout(() => t.style.display='none', 2800);
 }
 
-function esc(s) { if(!s)return''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
 
 document.addEventListener('keydown', e => { if(e.key==='Escape'){closeVisitModal();closeUploadModal();closePreview();closeDeleteModal();} });
 

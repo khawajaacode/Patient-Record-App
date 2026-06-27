@@ -250,6 +250,7 @@
 
 <div id="toast"></div>
 
+<script src="/static/js/utils.js"></script>
 <script>
 let editingId = null, deletingId = null, searchTimer, diseaseTimer;
 
@@ -260,7 +261,13 @@ async function loadStats() {
     document.getElementById('statVisits').textContent   = d.total_visits;
     document.getElementById('statReports').textContent  = d.total_reports;
     document.getElementById('statNew').textContent      = d.recent_patients;
-  } catch(e) {}
+  } catch(e) {
+    ['statPatients','statVisits','statReports','statNew'].forEach(id => {
+      const el = document.getElementById(id);
+      el.textContent = '—';
+      el.title = 'Could not load stats';
+    });
+  }
 }
 
 async function loadPatients(search = '') {
@@ -325,6 +332,11 @@ function closeModal() { document.getElementById('patientModal').classList.remove
 async function savePatient() {
   const name = document.getElementById('f_name').value.trim();
   if (!name) { document.getElementById('formError').textContent = 'Patient name is required.'; return; }
+
+  const btn = document.querySelector('#patientModal .btn-primary');
+  btn.disabled = true;
+  btn.textContent = 'Saving…';
+
   const data = {
     name, age: document.getElementById('f_age').value || null,
     gender: document.getElementById('f_gender').value,
@@ -340,10 +352,18 @@ async function savePatient() {
       headers: {'Content-Type':'application/json'}, body: JSON.stringify(data)
     });
     const result = await res.json();
-    if (!res.ok) { document.getElementById('formError').textContent = result.error || 'Save failed.'; return; }
+    if (!res.ok) {
+      document.getElementById('formError').textContent = result.error || 'Save failed.';
+      return;
+    }
     closeModal(); loadPatients(document.getElementById('searchInput').value); loadStats();
     showToast(editingId ? 'Patient updated' : 'Patient added');
-  } catch(e) { document.getElementById('formError').textContent = 'Network error.'; }
+  } catch(e) {
+    document.getElementById('formError').textContent = 'Network error.';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '💾 Save Patient';
+  }
 }
 
 function openDeleteModal(id) { deletingId = id; document.getElementById('deleteModal').classList.add('active'); }
@@ -412,7 +432,7 @@ function showToast(msg, isError = false) {
   t.style.display = 'block';
   setTimeout(() => t.style.display = 'none', 2800);
 }
-function esc(s) { if(!s)return''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
 document.addEventListener('keydown', e => { if(e.key==='Escape'){closeModal();closeSettings();closeDeleteModal();} });
 
 loadStats();

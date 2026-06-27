@@ -1,10 +1,11 @@
 @echo off
+title MediRecord
+cd /d "%~dp0"
 echo ========================================
 echo   MediRecord - Patient Record System
 echo ========================================
 echo.
 
-REM Check Python
 python --version >nul 2>&1
 IF ERRORLEVEL 1 (
     echo ERROR: Python is not installed or not in PATH.
@@ -13,9 +14,8 @@ IF ERRORLEVEL 1 (
     exit /b
 )
 
-REM Install dependencies
 echo Installing required packages...
-pip install -r requirements.txt --quiet
+pip install -r requirements.txt --quiet --disable-pip-version-check >nul 2>&1
 
 echo.
 echo Starting server...
@@ -24,7 +24,3 @@ echo Press CTRL+C to stop.
 echo.
 python app.py
 pause
-title MediRecord
-cd /d "%~dp0"
-pip install -r requirements.txt --quiet --disable-pip-version-check >nul 2>&1
-python app.py
