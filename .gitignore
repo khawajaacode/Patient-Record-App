@@ -1,11 +1,4 @@
-<<<<<<< HEAD
-__pycache__/
-*.pyc
-venv/
-.env
-uploads/
-.vscode/
-=======
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -139,4 +132,11 @@ uploads/
 
 # Settings (may contain sensitive info)
 settings.json
->>>>>>> feature
+
+# Local SQLite database
+patients.db
+*.db
+
+# Backups and generated Excel reports
+*.zip
+*.xlsx
