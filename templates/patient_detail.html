@@ -125,7 +125,7 @@
 <body>
 
 <header>
-  <a href="/" class="back-btn">← Back to Patients</a>
+  <a href="/" class="back-btn">Back to Patients</a>
   <div class="logo" style="color:#fff;">🏥 MediRecord</div>
   <div></div>
 </header>
@@ -299,7 +299,7 @@ function render(history, reports) {
         </div>
       </div>
       <div class="patient-actions">
-        <a href="/" class="btn btn-outline btn-sm">← Back</a>
+        <a href="/" class="btn btn-outline btn-sm">Back</a>
       </div>
     </div>
 
@@ -316,7 +316,7 @@ function render(history, reports) {
     <div class="section-block">
       <div class="section-header">
         <h2 class="section-title">📁 Reports & Scans <span style="font-size:0.9rem;color:var(--muted);font-family:'DM Sans',sans-serif;">(${reports.length} file${reports.length!==1?'s':''})</span></h2>
-        <button class="btn btn-primary btn-sm" onclick="openUploadModal()">⬆ Upload Report</button>
+        <button class="btn btn-primary btn-sm" onclick="openUploadModal()">Upload Report</button>
       </div>
       <div class="reports-grid">
         ${reports.map(r => renderReportCard(r)).join('')}
