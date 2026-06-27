@@ -17,26 +17,27 @@ A local, offline patient record management system built with Python + Flask + SQ
 
 ### Windows
 Double-click `run_windows.bat`  
-Or in terminal: `python app.py`
+Or in terminal: `python run.py`
 
 ### Mac / Linux
 ```bash
 chmod +x run_mac_linux.sh
 ./run_mac_linux.sh
 ```
-Or: `python3 app.py`
+Or: `python3 run.py`
 
 ### Manual
 ```bash
-pip install flask werkzeug
-python app.py
+pip install -r requirements.txt
+python run.py
 ```
 Then open: http://127.0.0.1:5000
 
 ## File Structure
 ```
 patient_records/
-├── app.py              ← Main Flask application
+├── run.py              ← Main Flask application entry point
+├── app/                ← Flask application package
 ├── requirements.txt    ← Python dependencies
 ├── patients.db         ← SQLite database (auto-created)
 ├── uploads/            ← Uploaded files (auto-created)
