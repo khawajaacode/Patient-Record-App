@@ -12,6 +12,8 @@ import sys
 import tempfile
 from contextlib import suppress
 
+import app.backup as backup_module
+
 ROOT = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, ROOT)
 
@@ -20,7 +22,46 @@ import app.config as app_config
 import app.db as db_module
 
 
+def test_backup_closes_connection_when_excel_build_fails() -> None:
+    class FakeConn:
+        def __init__(self) -> None:
+            self.closed = False
+
+        def close(self) -> None:
+            self.closed = True
+
+    fake_conn = FakeConn()
+    original_get_db = backup_module.get_db
+    original_build_excel = backup_module._build_excel
+    original_load_settings = backup_module._load_settings
+
+    def fake_get_db():
+        return fake_conn
+
+    def fake_build_excel(conn):
+        raise RuntimeError("boom")
+
+    def fake_load_settings():
+        return {"backup_folder": tempfile.gettempdir()}
+
+    backup_module.get_db = fake_get_db
+    backup_module._build_excel = fake_build_excel
+    backup_module._load_settings = fake_load_settings
+
+    try:
+        backup_module.create_backup("test")
+    finally:
+        backup_module.get_db = original_get_db
+        backup_module._build_excel = original_build_excel
+        backup_module._load_settings = original_load_settings
+
+    assert fake_conn.closed is True, "connection should be closed even if Excel build fails"
+
+
 def main() -> int:
+    print("[0/8] Checking backup connection cleanup...")
+    test_backup_closes_connection_when_excel_build_fails()
+
     temp_dir = tempfile.mkdtemp(prefix="patientapp-test-", dir=ROOT)
     temp_db = os.path.join(temp_dir, "patients.db")
     temp_uploads = os.path.join(temp_dir, "uploads")

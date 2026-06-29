@@ -242,8 +242,10 @@ def create_backup(trigger: str = "change") -> None:
 
     try:
         conn = get_db()
-        excel_bytes = _build_excel(conn)
-        conn.close()
+        try:
+            excel_bytes = _build_excel(conn)
+        finally:
+            conn.close()
 
         files_added = 0
         with zipfile.ZipFile(backup_file, "w", zipfile.ZIP_DEFLATED) as zf:

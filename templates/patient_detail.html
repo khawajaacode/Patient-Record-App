@@ -27,7 +27,7 @@
   .patient-card { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:28px 32px; box-shadow:var(--shadow); margin-bottom:28px; display:flex; justify-content:space-between; align-items:flex-start; gap:24px; flex-wrap:wrap; }
   .patient-info h1 { font-family:'DM Serif Display',serif; font-size:2rem; margin-bottom:8px; }
   .patient-meta { display:flex; gap:12px; flex-wrap:wrap; margin-top:10px; }
-  .meta-chip { display:inline-flex; align-items:center; gap:5px; padding:5px 12px; background:var(--bg); border:1px solid var(--border); border-radius:20px; font-size:0.82rem; color:var(--muted); }
+  .meta-chip { display:inline-flex; align-items:center; gap:5px; padding:5px 12px; background:var(--bg); border:1px solid var(--border); border-radius:20px; font-size:0.82rem; color:var(--muted); max-width:100%; overflow-wrap:anywhere; }
   .meta-chip strong { color:var(--text); }
   .patient-actions { display:flex; gap:10px; }
 
@@ -57,7 +57,7 @@
   .visit-actions { display:flex; gap:6px; }
   .visit-fields { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
   .visit-field label { font-size:0.74rem; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; margin-bottom:3px; }
-  .visit-field .val { font-size:0.88rem; color:var(--text); line-height:1.5; }
+  .visit-field .val { font-size:0.88rem; color:var(--text); line-height:1.5; overflow-wrap:anywhere; word-break:break-word; }
   .visit-field.full { grid-column:1/-1; }
   .disease-tag { display:inline-block; padding:3px 10px; background:#FEE2E2; color:#991B1B; border-radius:20px; font-size:0.78rem; font-weight:600; }
 
@@ -113,12 +113,34 @@
   #previewContent { width:100%; min-height:400px; border:none; }
   #previewImg { max-width:100%; border-radius:8px; display:none; }
 
-  @media (max-width:768px) {
-    .page { padding:16px 16px 48px; }
+  @media (max-width:900px) {
+    .page { padding:20px 20px 48px; }
+    .patient-card { padding:22px 20px; }
+  }
+
+  @media (max-width:640px) {
+    header { padding:0 14px; height:auto; min-height:64px; flex-wrap:wrap; gap:10px; padding-top:10px; padding-bottom:10px; }
+    .logo { font-size:1.2rem; }
+    .back-btn { font-size:0.8rem; }
+    .page { padding:14px 14px 48px; }
+    .patient-card { padding:18px; gap:14px; }
+    .patient-info h1 { font-size:1.6rem; }
+    .patient-info, .patient-meta { width:100%; }
+    .meta-chip { width:100%; }
+    .patient-actions { width:100%; }
+    .patient-actions .btn { width:100%; justify-content:center; }
+    .section-header { flex-direction:column; align-items:flex-start; gap:10px; }
+    .visit-top { flex-direction:column; align-items:flex-start; gap:10px; }
+    .visit-actions { width:100%; }
+    .visit-actions .btn { flex:1; justify-content:center; }
     .visit-fields { grid-template-columns:1fr; }
+    .reports-grid { grid-template-columns:repeat(2, minmax(0, 1fr)); }
     .form-grid { grid-template-columns:1fr; }
-    .reports-grid { grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); }
-    header { padding:0 16px; }
+    .form-actions { flex-direction:column-reverse; }
+    .form-actions .btn { width:100%; justify-content:center; }
+    .modal-overlay { padding:12px; }
+    .modal { max-width:100%; }
+    .modal-header, .modal-body { padding-left:18px; padding-right:18px; }
   }
 </style>
 </head>
